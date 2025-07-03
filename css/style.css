@@ -175,6 +175,7 @@
     --dark: #0F051D;
     --light: #fff;
     --slider: #000;
+    --toggle-dark-mode: #1B1128;
 
     --heading: #0F051D;
     --para1: #7B7583;
@@ -329,7 +330,7 @@ button {
     appearance: none;
     border: 0;
     outline: 0;
-    border-radius: 50px;
+    border-radius: 5rem;
     background: linear-gradient(62deg, #2600FC 0%, #FF00EA 100%);
     color: var(--light);
     cursor: pointer;
@@ -337,18 +338,24 @@ button {
     font-size: 1.7rem;
     font-weight: 700;
     line-height: 2.16rem;
-    padding: 20px 40px;
+    padding: 2rem 4rem;
 
-    display: flex;
-    gap: 10px;
+    display: inline-flex;
+    gap: 1rem;
+    transition: 0.3s;
+}
+
+button:hover {
+    box-shadow: 0 4px 24px 0 rgba(38, 0, 252, 0.15), 0 1.5px 6px 0 rgba(255, 0, 234, 0.10);
+    transform: scale(1.03);
 }
 
 /* ----------- */
 /* DIVIDER */
 
 img.divider {
-    margin: 120px auto;
-    width: 76.76px;
+    margin: 12rem auto;
+    width: 7.676rem;
     display: block;
 }
 
@@ -358,10 +365,20 @@ svg {
     fill: light-dark(var(--heading), var(--light));
 }
 
-/* CONTAINER */
+/* --------- */
+/* LAYOUT */
+
 .container {
-    width: clamp(100%, 1220px, 100%);
+    width: clamp(100%, 122rem, 100%);
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 40rem), 1fr));
+    place-content: center;
+    place-items: center;
+}
+
 
 
 
@@ -369,16 +386,31 @@ svg {
 /* HEADER */
 /* ================ */
 
+header {
+    padding-top: 8rem
+}
 
 
 /* -------------- */
 /* NAVIGATION */
 
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    margin-bottom: 8.5rem;
+    width: 100%;
+    background: light-dark(var(--light), var(--dark));
+    box-shadow: 0 .2rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 2rem 0;
     width: 100%;
 }
 
@@ -389,16 +421,17 @@ nav .links {
 
 nav .social {
     display: flex;
+    align-items: center;
     gap: 2rem;
 }
 
-nav i {
+nav .menu {
     color: light-dark(var(--heading), var(--light));
-    font-size: 3rem;
     cursor: pointer;
+
 }
 
-nav i:hover {
+nav .menu:hover {
     transition: .3s;
     opacity: .5;
 
@@ -417,13 +450,12 @@ nav input[type="checkbox"]:checked~.links {
 
 @media screen and (max-width: 996px) {
 
-    nav .social {
+    nav .social #twitter {
         display: none;
     }
 
-
     nav .menu {
-        display: block !important;
+        display: inline-block !important;
     }
 
     /* OVERLAY */
@@ -435,7 +467,7 @@ nav input[type="checkbox"]:checked~.links {
         display: block;
         position: fixed;
         inset: 0;
-        z-index: 9;
+        z-index: 8;
         background: rgba(0, 0, 0, 0.4);
         transition: 0.3s;
     }
@@ -449,7 +481,7 @@ nav input[type="checkbox"]:checked~.links {
         background-origin: border-box;
 
         transition: .6s;
-        border-top: 4px solid transparent;
+        border-top: .4rem solid transparent;
         flex-direction: column;
         position: fixed;
         z-index: 10;
@@ -476,7 +508,7 @@ nav input[type="checkbox"]:checked~.links {
 
     nav .links>* {
         padding: 1.1rem 0;
-        border-top: 1px solid rgba(255, 251, 251, 0.10);
+        border-top: .1rem solid rgba(255, 251, 251, 0.10);
     }
 
     nav .links .slider-social {
@@ -496,8 +528,8 @@ nav input[type="checkbox"]:checked~.links {
         height: 1.6rem;
         flex-shrink: 0;
         font-size: 1.6rem;
-        border-radius: 3px;
-        border: 1px solid light-dark(var(--heading), var(--light));
+        border-radius: .3rem;
+        border: .1rem solid light-dark(var(--heading), var(--light));
         box-sizing: content-box;
     }
 
@@ -505,3 +537,118 @@ nav input[type="checkbox"]:checked~.links {
 
 
 }
+
+
+
+/* -------------- */
+/* BANNER */
+
+header .banner {
+    margin: 12rem 0;
+    position: relative;
+}
+
+/* PERSON IMAGES */
+header .banner .person {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    text-align: left;
+}
+
+header .banner .person-image img {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 24px;
+    box-shadow: 0px 0px 0px 3px #FFF;
+    margin-right: -2rem;
+}
+
+header .banner .person-image img:last-child {
+    margin-right: 0;
+}
+
+@media screen and (max-width:556px) {
+
+    header .banner h1 {
+        font-size: 4.5rem;
+        line-height: 4.5rem;
+    }
+
+    header .banner {
+        text-align: center;
+    }
+
+    header .banner .person {
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+
+/* -------------- */
+/* DARK MODE */
+
+@media screen and (prefers-color-scheme: dark) {
+    :root:has(input[type="checkbox"]#dark:checked) {
+        color-scheme: light;
+    }
+}
+
+@media screen and (prefers-color-scheme: light) {
+    :root:has(input[type="checkbox"]#dark:checked) {
+        color-scheme: dark;
+    }
+}
+
+
+
+#dark-mode {
+    position: absolute;
+    bottom: 0;
+    right: 2rem;
+    display: flex;
+
+    width: 3.6rem;
+    height: 3.6rem;
+    padding: 1rem;
+    border-radius: 50%;
+    background: var(--toggle-dark-mode);
+    box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1);
+    transition: .2s;
+    animation: 2s pulse 5 linear;
+}
+
+#dark-mode:hover {
+    opacity: .5;
+}
+
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1), 0 0 0 0 #70f;
+    }
+
+
+    80% {
+        box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1), 0 0 0 2.5rem #f070;
+        scale: 1.2;
+    }
+}
+
+
+/* -------------- */
+/* BRANDS */
+
+header .brands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6.4rem;
+    justify-content: center;
+}
+
+
+/* ========================= */
+/* COLLECTION */
+/* ========================= */
