@@ -1,4 +1,4 @@
-const darkModeCheckbox = document.querySelector("input[type='checkbox']#dark");
+const darkModeCheckbox = document.querySelector("#dark");
 
 if (darkModeCheckbox) {
     // Initialize checkbox state from localStorage
