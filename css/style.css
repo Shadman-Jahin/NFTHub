@@ -216,6 +216,23 @@ a {
     font-size: 1.9rem;
     font-weight: 700;
     line-height: 2rem;
+    position: relative;
+}
+
+a::after {
+    bottom: 0;
+    translate: 0 .5rem;
+    position: absolute;
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: .2rem;
+    background: linear-gradient(67deg, #2600FC 0%, #FF00EA 100%);
+    transition: .3s;
+}
+
+a.active::after {
+    width: 100%;
 }
 
 a:hover {
@@ -226,6 +243,7 @@ a:hover {
 html {
     font-size: 10px;
     font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
 }
 
 /* -------------- */
@@ -396,8 +414,22 @@ svg {
 /* ================ */
 
 header {
-    padding-top: 8rem
+    padding-top: 8rem;
+    position: relative;
 }
+
+header::before {
+    display: none;
+    content: '';
+    position: absolute;
+    opacity: .5;
+    inset: 0;
+    background: url("../images/header/light-mode-bg.png") no-repeat center / cover;
+}
+
+
+
+
 
 
 /* -------------- */
@@ -410,8 +442,7 @@ header {
     z-index: 9;
     margin-bottom: 8.5rem;
     width: 100%;
-    background: light-dark(var(--light), var(--dark));
-    box-shadow: 0 .2rem 1rem rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(1.5rem);
 }
 
 
@@ -599,15 +630,25 @@ header .banner .person-image img:last-child {
 /* -------------- */
 /* DARK MODE */
 
+
+
 @media screen and (prefers-color-scheme: dark) {
     :root:has(input[type="checkbox"]#dark:checked) {
         color-scheme: light;
+    }
+
+    :root:has(input[type="checkbox"]#dark:checked) header::before {
+        display: block;
     }
 }
 
 @media screen and (prefers-color-scheme: light) {
     :root:has(input[type="checkbox"]#dark:checked) {
         color-scheme: dark;
+    }
+
+    :root:has(input[type="checkbox"]#dark:checked) header::before {
+        display: none;
     }
 }
 
@@ -664,6 +705,75 @@ header .brands {
 
 
 
+#collection .container {
+    position: relative;
+}
+
+#collection .carousel-custom {
+    text-align: center;
+    min-height: 51.6rem;
+    width: 100%;
+}
+
+
+#collection .card-wrapper .card-item .image img {
+    border-radius: 1.6rem;
+}
+
+/* SWIPER  */
+
+[class^="swiper-button"] {
+    background: light-dark(var(--dark), var(--light));
+    position: absolute;
+    translate: -0% -50%;
+    top: 50%;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    opacity: .4;
+    transition: opacity .3s;
+    text-align: center;
+    align-content: center;
+    z-index: 1;
+}
+
+#collection .container .swiper-button-prev {
+    left: 0;
+
+}
+
+#collection .container .swiper-button-next {
+    right: 0;
+    translate: 0% -50% !important;
+}
+
+
+[class^="swiper-button"]::after {
+    display: none;
+}
+
+[class^="swiper-button"]:hover {
+    opacity: 1;
+}
+
+
+
+
+
+#collection .carousel-custom .swiper-pagination-bullet {
+    width: 1rem;
+    height: 1rem;
+    background: light-dark(var(--dark), var(--light));
+}
+
+
+#collection .carousel-custom .swiper-pagination-bullet+.swiper-pagination-bullet {
+    margin-left: 2.2rem;
+}
+
+
+
+
 /* ================= */
 /* WHY CHOOSE US */
 /* ================= */
@@ -676,6 +786,8 @@ header .brands {
 }
 
 #choose .cards {
+    padding: 5rem 0;
+    min-height: 40rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, 27.7rem);
     grid-auto-rows: min(35rem, 100%);
@@ -1006,4 +1118,96 @@ header .brands {
 
 #ans .accordion-custom .custom-button[aria-expanded="false"] svg {
     rotate: 0deg;
+}
+
+
+/* ============== */
+/* MINTING */
+/* ============== */
+
+#minting {
+    padding: 15rem 0;
+    text-align: center;
+    position: relative;
+}
+
+#minting .container {
+    background: url("../images/never-miss/bg-icon1.png"), url("../images/never-miss/bg-icon2.png"), url("../images/never-miss/bg-icon3.png"), url("../images/never-miss/bg-icon4.png");
+    background-repeat: no-repeat;
+    background-size: 2.5rem, 4rem, 4rem, 2rem;
+    background-position: 15% 10%, 90% 10%, 10% 90%, 85% 90%;
+}
+
+#minting::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: url("../images/minting/background.png") no-repeat center / cover, light-dark(var(--light), var(--dark));
+    opacity: .25;
+    pointer-events: none;
+}
+
+#minting>* {
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+}
+
+
+
+/* =============== */
+/* FOOTER */
+/* =============== */
+
+footer .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3.5rem;
+}
+
+footer .lists {
+    display: flex;
+    width: min(100%, 30rem);
+    gap: 3.5rem;
+}
+
+
+
+footer .logo {
+    width: min(35rem, 100%);
+    margin-right: auto;
+}
+
+footer .logo .social {
+    display: flex;
+    gap: 2rem;
+}
+
+
+footer .flex:last-child {
+    gap: 0 1rem;
+}
+
+footer .flex:last-child p:first-child {
+    margin-right: auto;
+}
+
+
+@media screen and (max-width: 576px) {
+    footer .lists {
+        flex-direction: column;
+    }
+
+    footer .flex:last-child {
+        justify-content: center;
+        text-align: center;
+
+    }
+
+    footer .flex:last-child p:first-child {
+        margin: 0;
+    }
 }
