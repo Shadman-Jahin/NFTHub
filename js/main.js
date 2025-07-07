@@ -1,3 +1,53 @@
+// ---------
+// LOADER
+
+const loader = document.querySelector(".loading");
+window.addEventListener("load", () => {
+    loader.classList.add("active");
+});
+
+
+
+// -----------------
+// CUSTOM SCROLLBAR
+let totalHeight = document.body.scrollHeight - window.innerHeight;
+window.onscroll = () => {
+    let height = (window.pageYOffset / totalHeight) * 100;
+    document.documentElement.style.setProperty("--scrollbar-height", height + "%");
+}
+
+
+// --------------
+// CURSOR
+
+const cursor = document.querySelector(".cursor");
+document.addEventListener("pointermove", e => {
+    let x = e.clientX;
+    let y = e.clientY;
+    cursor.style.top = y + "px";
+    cursor.style.left = x + "px";
+    cursor.style.translate = `-50% -50%`;
+
+});
+
+document.addEventListener("click", () => {
+    cursor.style.boxShadow = `0 0 0 1.5rem #0000`;
+    setTimeout(() => {
+        cursor.style.transition = `none`;
+        cursor.style.boxShadow = `0 0 0 0 #f07`
+    }, 500);
+    cursor.style.transition = `box-shadow .5s`;
+});
+
+
+
+// ---------------
+// AOS INITIALIZE
+
+AOS.init();
+
+
+
 const darkModeCheckbox = document.querySelector("#dark");
 
 if (darkModeCheckbox) {

@@ -187,6 +187,7 @@
     --border-light: rgba(131, 131, 131, 0.25);
 
     --space: 0.25rem;
+    --scrollbar-height: 0%;
 }
 
 body {
@@ -407,6 +408,63 @@ svg {
 }
 
 
+/* ================== */
+/* CUSTOM CURSOR */
+/* ================== */
+
+* {
+    cursor: none !important;
+}
+
+.cursor {
+    pointer-events: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 5px solid #f0f;
+    border-radius: 50%;
+    position: fixed;
+    z-index: 19;
+    filter: drop-shadow(0 0 5px #f0f);
+    box-shadow: 0 0 0 0 #f07;
+    transition: box-shadow .5s;
+}
+
+
+
+/* ==================== */
+/* LOADING + SCROLLBAR*/
+/* ==================== */
+
+.scrollbar {
+    background: linear-gradient(62deg, #2600FC 0%, #FF00EA 100%);
+    width: .3rem;
+    height: var(--scrollbar-height);
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 11;
+}
+
+body:has(.loading)::-webkit-scrollbar {
+    width: 0;
+}
+
+.loading {
+    background: light-dark(var(--light), var(--dark));
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    text-align: center;
+    align-content: center;
+}
+
+l-line-spinner {
+    --uib-color: #f07;
+}
+
+.loading.active {
+    display: none;
+}
 
 
 /* ================ */
@@ -799,14 +857,29 @@ header .brands {
     padding: 3rem;
     border-radius: 2.4rem;
     border: .1rem solid light-dark(var(--para1), var(--para2));
+    animation-delay: calc(var(--i) * .5s);
+
 }
 
 #choose .cards .item h5 {
     width: 10rem;
 }
 
+#choose .cards .item:nth-child(odd) {
+    animation: move infinite;
+    animation-duration: calc(var(--i) * 6s);
+}
+
 #choose .cards .item:nth-child(even) {
-    translate: 0 4.8rem;
+    animation: move infinite;
+    animation-duration: calc(var(--i) * 4s);
+    /* translate: 0 4.8rem; */
+}
+
+@keyframes move {
+    50% {
+        translate: 0 4.8rem;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -1036,10 +1109,17 @@ header .brands {
 #meet .cards .item {
     padding: 2.4rem;
     text-align: center;
+    animation-duration: calc(var(--i) * .3s);
 }
 
 #meet .cards .item:nth-child(odd) {
-    translate: 0 3rem;
+    animation: move infinite;
+    animation-duration: calc(var(--i) * 6s);
+}
+
+#meet .cards .item:nth-child(even) {
+    animation: move infinite;
+    animation-duration: calc(var(--i) * 4s);
 }
 
 
