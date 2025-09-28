@@ -1,10 +1,75 @@
 // ---------
 // LOADER
 
-const loader = document.querySelector(".loading");
 window.addEventListener("load", () => {
-    loader.classList.add("active");
+    const navEntries = performance.getEntriesByType("navigation");
+    const loadTime = navEntries.length
+        ? navEntries[0].loadEventEnd - navEntries[0].startTime
+        : performance.now();
+
+    const minimumTime = 1000; // 1s 
+    const remainingTime = Math.max(0, minimumTime - loadTime);
+
+    setTimeout(() => {
+        document.querySelector(".loading")?.remove();
+    }, remainingTime);
 });
+
+
+
+// -------------------------------
+// LENIS INITIALIZATION (Corrected)
+// -------------------------------
+
+// 1. Initialize Lenis with optimized settings
+const lenis = new Lenis({
+    // VITAL CHANGE: Lower the duration for a snappier, less laggy feel. 
+    // The official site is very responsive.
+    // 1.5s is quite long and makes it feel heavy/laggy.
+    duration: 1.2,
+
+    // OPTIONAL: Use 'lerp' instead of 'duration' for more natural physics-based smoothness.
+    // lenis.darkroom.engineering likely uses a low 'lerp'.
+    // NOTE: 'duration' will be ignored if 'lerp' is defined.
+    // Try uncommenting 'lerp' and commenting 'duration' to test a super-smooth feel.
+    // lerp: 0.07, 
+
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    direction: 'vertical',
+    gestureDirection: 'vertical',
+    smoothWheel: true,
+
+    // OPTIMIZED: Adjusted multiplier down. A wheelMultiplier of 1.5 or 2 can feel too fast.
+    wheelMultiplier: 1.5,
+
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+
+    // CRITICAL FIX: Set autoRaf to false and manually implement the loop. 
+    // This is the standard, most reliable method, ensuring the instance is globally available.
+    autoRaf: false,
+});
+
+
+// 2. The CRITICAL requestAnimationFrame (RAF) loop
+// This function must be outside your initialization wrapper to work correctly.
+function raf(time) {
+    lenis.raf(time); // Tell Lenis the current time to calculate the scroll position
+    requestAnimationFrame(raf); // Recursively call itself on the next frame
+}
+
+// 3. Start the loop
+requestAnimationFrame(raf);
+
+// (Optional) Add a listener to log scroll events for debugging
+lenis.on('scroll', (e) => {
+    console.log(e);
+});
+
+
+
+
 
 
 

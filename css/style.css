@@ -244,8 +244,28 @@ a:hover {
 html {
     font-size: 10px;
     font-family: "Inter", sans-serif;
-    scroll-behavior: smooth;
 }
+
+/* ------------------------ */
+/* LENIS SCROLL */
+
+html.lenis {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+
 
 /* -------------- */
 /* TYPOGRAPHY */
@@ -429,7 +449,11 @@ svg {
     transition: box-shadow .5s;
 }
 
-
+@media (pointer: coarse) {
+    .cursor {
+        display: none;
+    }
+}
 
 /* ==================== */
 /* LOADING + SCROLLBAR*/
@@ -445,7 +469,7 @@ svg {
     z-index: 11;
 }
 
-body:has(.loading)::-webkit-scrollbar {
+body::-webkit-scrollbar {
     width: 0;
 }
 
