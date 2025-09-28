@@ -51,11 +51,50 @@ requestAnimationFrame(raf);
 
 
 
+// * ===========================
+// * COUNTER INCREMENT ANIMATION
+// * ===========================
+
+const counters = document.querySelectorAll('[data-custom-counter]');
+
+counters.forEach(counter => {
+    const target = +counter.getAttribute('data-custom-counter');
+    const parent = counter.getAttribute('data-counter-aos-parent');
+    const selectParent = document.querySelector(`${parent}`);
+
+    let count = 0;
+    const speed = 50; // lower = faster
+
+    const updateCount = () => {
+        const increment = Math.ceil(target / 100); // adjust smoothness
+
+        if (count < target) {
+            count += increment;
+            counter.innerText = count > target ? target : count;
+            setTimeout(updateCount, speed);
+        } else {
+            counter.innerText = target;
+        }
+    };
+
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (selectParent.classList.contains("aos-animate")) {
+                updateCount();
+                observer.disconnect();
+            }
+        });
+    });
+
+    observer.observe(selectParent, { attributes: true, attributeFilter: ['class'] });
+
+});
 
 
 
-// -----------------
-// CUSTOM SCROLLBAR
+// * -----------------
+// * CUSTOM SCROLLBAR
+
 let totalHeight = document.body.scrollHeight - window.innerHeight;
 window.onscroll = () => {
     let height = (window.pageYOffset / totalHeight) * 100;
