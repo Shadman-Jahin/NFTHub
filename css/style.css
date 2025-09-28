@@ -246,8 +246,41 @@ html {
     font-family: "Inter", sans-serif;
 }
 
-/* ------------------------ */
-/* LENIS SCROLL */
+/* * ========================================== */
+/* * CUSTOM (AOS) ANIMATIONS */
+/* * ========================================== */
+
+/* ------------------------------------------- */
+/* FADE DOWN */
+
+[data-aos="fade-down-custom"] {
+    opacity: 0;
+    transform: translateY(-50px);
+    transition-property: transform, opacity;
+}
+
+[data-aos="fade-down-custom"].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ------------------------------------------- */
+/* FILL RIGHT */
+
+[data-aos="fill-right-custom"] {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    transition: clip-path 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-aos="fill-right-custom"].aos-animate {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+
+
+/* * ===========================*/
+/* * LENIS SCROLL */
+/* * ===========================*/
 
 html.lenis {
     height: auto;
@@ -267,8 +300,9 @@ html.lenis {
 
 
 
-/* -------------- */
-/* TYPOGRAPHY */
+/* * ===================== */
+/* * TYPOGRAPHY */
+/* * ===================== */
 
 /* PARAGRAPH */
 
