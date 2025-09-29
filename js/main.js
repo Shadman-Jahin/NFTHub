@@ -127,19 +127,30 @@ document.addEventListener("click", () => {
 
 
 
-// * =====================
-// * DARK MODE
-// * =====================
-const darkModeCheckbox = document.querySelector("#dark");
+// * ========================
+// * LIGHT/DARK MODE
+// * ========================
 
-if (darkModeCheckbox) {
-    // Initialize checkbox state from localStorage
-    const isActive = JSON.parse(localStorage.getItem("active") || "false");
-    darkModeCheckbox.checked = isActive;
+// SELECTING
+const input = document.querySelector("#dark-mode-check");
+const query = window.matchMedia("(prefers-color-scheme: light)");
 
-    // Listen for changes and update localStorage
-    darkModeCheckbox.addEventListener("change", e => {
-        localStorage.setItem("active", JSON.stringify(e.target.checked));
+if (input) {
+    //  STORE
+    const stored = localStorage.getItem("light");
+    const userPref = stored !== null ? JSON.parse(stored) : query.matches;
+    input.checked = userPref;
+
+    // UPDATE BY USER
+    input.addEventListener("change", () => {
+        localStorage.setItem("light", JSON.stringify(input.checked));
+    });
+
+    // UPDATE BY THEME
+    query.addEventListener("change", e => {
+        if (localStorage.getItem("light") === null) {
+            input.checked = e.matches;
+        }
     });
 }
 

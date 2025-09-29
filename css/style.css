@@ -551,6 +551,11 @@ header::before {
 /* -------------- */
 /* NAVIGATION */
 
+header nav .logo {
+    display: flex;
+    align-items: center;
+}
+
 .navigation {
     position: fixed;
     top: 0;
@@ -743,64 +748,79 @@ header .banner .person-image img:last-child {
 }
 
 
-/* -------------- */
-/* DARK MODE */
+/* $ ------------------ */
+/* $ TOGGLE DARK MODE */
 
+/* FUNCTIONALITY */
 
-
-@media screen and (prefers-color-scheme: dark) {
-    :root:has(input[type="checkbox"]#dark:checked) {
-        color-scheme: light;
-    }
-
-    :root:has(input[type="checkbox"]#dark:checked) header::before {
-        display: block;
-    }
-}
-
-@media screen and (prefers-color-scheme: light) {
-    :root:has(input[type="checkbox"]#dark:checked) {
-        color-scheme: dark;
-    }
-
-    :root:has(input[type="checkbox"]#dark:checked) header::before {
-        display: none;
-    }
+:root:has(#dark-mode-check:checked) {
+    color-scheme: light;
 }
 
 
+/* STYLING */
 
-#dark-mode {
+.toggle-switch {
+    transform: scale(.6);
+    position: relative;
+    width: 10rem;
+    height: 5rem;
+    --light: #fff;
+    --dark: rgb(55, 0, 118);
+    --link: rgb(27, 129, 112);
+    --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
     position: absolute;
-    bottom: 0;
-    right: 2rem;
-    display: flex;
+    width: 100%;
+    height: 5rem;
+    background-color: var(--dark);
+    border-radius: 2.5rem;
+    cursor: pointer;
+    border: .3rem solid var(--dark);
+}
 
-    width: 3.6rem;
-    height: 3.6rem;
-    padding: 1rem;
+.checkbox {
+    position: absolute;
+    display: none;
+}
+
+.slider-dark {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 2.5rem;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.switch-label:has(.checkbox:checked) {
+    background-color: var(--light);
+}
+
+.slider-dark::before {
+    content: "";
+    position: absolute;
+    top: .7rem;
+    left: .7rem;
+    width: 3.0rem;
+    height: 3.0rem;
     border-radius: 50%;
-    background: var(--toggle-dark-mode);
-    box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1);
-    transition: .2s;
-    animation: 2s pulse 5 linear;
+    -webkit-box-shadow: inset 1.2rem -.4rem 0 0 var(--light);
+    box-shadow: inset 1.2rem -.4rem 0 0 var(--light);
+    background-color: var(--dark);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
 }
 
-#dark-mode:hover {
-    opacity: .5;
-}
-
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1), 0 0 0 0 #70f;
-    }
-
-
-    80% {
-        box-shadow: 0rem 0.6rem 3.2rem -0.1rem rgba(0, 0, 0, 0.1), 0 0 0 2.5rem #f070;
-        scale: 1.2;
-    }
+.checkbox:checked~.slider-dark::before {
+    -webkit-transform: translateX(50px);
+    -ms-transform: translateX(50px);
+    transform: translateX(50px);
+    background-color: var(--dark);
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 
